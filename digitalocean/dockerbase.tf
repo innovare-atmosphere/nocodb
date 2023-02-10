@@ -32,7 +32,7 @@ resource "digitalocean_droplet" "www-nocodb" {
     user = "root"
     type = "ssh"
     private_key = var.pvt_key != "" ? file(var.pvt_key) : tls_private_key.pk.private_key_pem
-    timeout = "2m"
+    timeout = "4m"
   }
 
   provisioner "remote-exec" {
@@ -44,6 +44,7 @@ resource "digitalocean_droplet" "www-nocodb" {
       "sleep 5s",
       "apt install -y nginx",
       "apt install -y python3-certbot-nginx",
+      "apt install -y docker-compose",
       # create nocodb installation directory
       "mkdir /root/nocodb",
       "mkdir /root/nocodb/data",
